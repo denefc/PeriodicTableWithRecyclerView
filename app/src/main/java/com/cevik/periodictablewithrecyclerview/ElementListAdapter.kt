@@ -1,5 +1,6 @@
 package com.cevik.periodictablewithrecyclerview
 
+import android.annotation.SuppressLint
 import android.text.Layout
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,12 +9,13 @@ import com.cevik.periodictablewithrecyclerview.data.model.ElementModel
 import com.cevik.periodictablewithrecyclerview.data.model.EmptyModel
 import com.cevik.periodictablewithrecyclerview.data.model.PeriodicTableModel
 
-class ElementListAdapter(private val onItemClickListener:(ElementModel)->Unit):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ElementListAdapter(private val itemClickListener: OnItemClickListener):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
    var elementList: List<PeriodicTableModel> = arrayListOf()
+       @SuppressLint("NotifyDataSetChanged")
        set(value) {
        field=value
-       notifyDataSetChanged()
+           notifyDataSetChanged()
    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder{
@@ -41,13 +43,13 @@ class ElementListAdapter(private val onItemClickListener:(ElementModel)->Unit):R
         when(elementList[position]){
             //javadaki instance of'a eşit is keywordü
             is ElementModel->{
-                (holder as ElementListViewHolder).bind(elementList[position] as ElementModel,position,onItemClickListener)
+                (holder as ElementListViewHolder).bind(elementList[position] as ElementModel,position,itemClickListener)
             }
             is EmptyModel->{
                 (holder as EmptyListViewHolder)
             }
             else ->{
-                (holder as ElementListViewHolder).bind(elementList[position] as ElementModel,position,onItemClickListener)
+                (holder as ElementListViewHolder).bind(elementList[position] as ElementModel,position,itemClickListener)
             }
 
         }
