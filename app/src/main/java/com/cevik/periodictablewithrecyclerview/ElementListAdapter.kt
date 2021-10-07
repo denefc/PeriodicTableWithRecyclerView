@@ -8,7 +8,7 @@ import com.cevik.periodictablewithrecyclerview.data.model.ElementModel
 import com.cevik.periodictablewithrecyclerview.data.model.EmptyModel
 import com.cevik.periodictablewithrecyclerview.data.model.PeriodicTableModel
 
-class ElementListAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ElementListAdapter(private val onItemClickListener:(ElementModel)->Unit):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
    var elementList: List<PeriodicTableModel> = arrayListOf()
        set(value) {
@@ -41,13 +41,13 @@ class ElementListAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when(elementList[position]){
             //javadaki instance of'a eşit is keywordü
             is ElementModel->{
-                (holder as ElementListViewHolder).bind(elementList[position] as ElementModel,position)
+                (holder as ElementListViewHolder).bind(elementList[position] as ElementModel,position,onItemClickListener)
             }
             is EmptyModel->{
                 (holder as EmptyListViewHolder)
             }
             else ->{
-                (holder as ElementListViewHolder).bind(elementList[position] as ElementModel,position)
+                (holder as ElementListViewHolder).bind(elementList[position] as ElementModel,position,onItemClickListener)
             }
 
         }

@@ -3,6 +3,7 @@ package com.cevik.periodictablewithrecyclerview
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.GridLayout
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,11 +18,14 @@ class MainActivity : AppCompatActivity() {
 
         val binding=DataBindingUtil.setContentView<ActivityMainBinding>(this,R.layout.activity_main)
 
-        val adapter=ElementListAdapter()
+        val adapter=ElementListAdapter{elementModel ->
+            Toast.makeText(this,elementModel.name,Toast.LENGTH_LONG).show()
+        }
         adapter.elementList=MockDataGenerator.generateElementList(126)
 
         binding.rvElementList.adapter=adapter
-        binding.rvElementList.layoutManager=GridLayoutManager(this,7,RecyclerView.HORIZONTAL,false)
+        binding.rvElementList.layoutManager=
+            GridLayoutManager(this,7,RecyclerView.HORIZONTAL,false)
 
 
 
